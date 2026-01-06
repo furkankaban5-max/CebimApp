@@ -1,0 +1,22 @@
+name: AAB Olusturucu
+
+on:
+  workflow_dispatch: # Manuel baslatmak icin
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Java Kurulumu
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: AAB Dosyasini Derle
+        run: chmod +x gradlew && ./gradlew bundleRelease
+      - name: Dosyayi Yukle
+        uses: actions/upload-artifact@v3
+        with:
+          name: BenCebim-AAB
+          path: app/build/outputs/bundle/release/*.aab
